@@ -1,0 +1,28 @@
+from pydantic import BaseModel, Field, EmailStr, ValidationError
+
+# 1. Modell definieren
+class User(BaseModel):
+    name: str
+    age: int = Field(..., ge=18, le=120)
+    email: EmailStr
+
+# 2. Gültige Eingabe
+print("✅ Gültiger Benutzer:")
+try:
+    user = User(name="Alice", age=30, email="alice@example.com")
+    print(user)
+except ValidationError as e:
+    print(e)
+
+# 3. Ungültige Eingabe
+print("\n❌ Ungültiger Benutzer:")
+try:
+    user = User(name="Bob", age=15, email="bob_at_example.com")
+    print(user)
+except ValidationError as e:
+    print(e)
+
+
+
+
+
